@@ -106,7 +106,7 @@ class _ExpenseitemState extends State<Expenseitem> {
                           const Text("\$ "),
                           Text(
                             (widget.registeredExpenseList[index].amount)
-                                .toString(),
+                                .toStringAsFixed(1),
                           ),
                         ],
                       ),

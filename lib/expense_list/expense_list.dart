@@ -29,7 +29,7 @@ List<ExpenModel> registeredExpenseList = [
       amount: 10.0,
       category: ExpenseCategory.transportation,
       expenseDate: DateTime(2023, 1, 2),
-      remark: "KMB Bus")
+      remark: "KMB Bus"),
 ];
 
 class _ExpenseListState extends State<ExpenseList> {
@@ -135,8 +135,7 @@ class _ExpenseListState extends State<ExpenseList> {
 
   @override
   Widget build(BuildContext context) {
-
-    final height=MediaQuery.of(context).size.height;
+    final height = MediaQuery.of(context).size.height;
     print(height);
 
     return Scaffold(
@@ -161,16 +160,26 @@ class _ExpenseListState extends State<ExpenseList> {
         width: double.infinity,
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 30.0),
-          child: Column(
-            children: [
-              Totalexpense(tolotaExpense),
-              Expenseitem(
-                registeredExpenseList: registeredExpenseList,
-                deledExpense: deledExpense,
-                saveEditExpanse: saveEditExpanse,
-              ),
-            ],
-          ),
+          child: height > 800
+              ? Column(
+                  children: [
+                    Totalexpense(tolotaExpense),
+                    Expenseitem(
+                      registeredExpenseList: registeredExpenseList,
+                      deledExpense: deledExpense,
+                      saveEditExpanse: saveEditExpanse,
+                    ),
+                  ],
+                )
+              : Row(
+                  children: [
+                    Expenseitem(
+                      registeredExpenseList: registeredExpenseList,
+                      deledExpense: deledExpense,
+                      saveEditExpanse: saveEditExpanse,
+                    ),
+                  ],
+                ),
         ),
       ),
     );

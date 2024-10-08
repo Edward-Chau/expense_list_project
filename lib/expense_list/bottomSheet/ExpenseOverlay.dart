@@ -2,6 +2,7 @@ import 'package:expense_list_project/expense_list/widget/expenseItem.dart';
 import 'package:expense_list_project/model/BottomSheetBar.dart';
 import 'package:expense_list_project/model/expenModel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Expenseoverlay extends StatefulWidget {
   const Expenseoverlay({required this.addExpense, super.key});
@@ -37,11 +38,12 @@ class _ExpenseoverlayState extends State<Expenseoverlay> {
         builder: (context) {
           return AlertDialog(
             // icon: const Icon(Icons.error),
-            title: const Row(
+            title: Row(
               children: [
-                Icon(Icons.error_outline),
-                SizedBox(width: 8),
-                Text("Invalid Value"),
+                const Icon(Icons.error_outline),
+                const SizedBox(width: 8),
+                Text("Invalid Value",
+                    style: Theme.of(context).textTheme.bodyMedium),
               ],
             ),
             actions: [
@@ -83,6 +85,8 @@ class _ExpenseoverlayState extends State<Expenseoverlay> {
 
   @override
   Widget build(BuildContext context) {
+    final KeyBoardSpace = MediaQuery.of(context).viewInsets.bottom;
+
     // inputTitle.text = defaultTitleText;
     String dateText;
     if (selectedDate == null) {
@@ -93,129 +97,133 @@ class _ExpenseoverlayState extends State<Expenseoverlay> {
 
     return Container(
       margin: const EdgeInsetsDirectional.symmetric(horizontal: 30),
+      height: double.infinity,
       width: double.infinity,
       child: SingleChildScrollView(
-        child: Column(
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(top: 10, bottom: 50),
-              child: BottomSheetBar(height: 8, width: 100),
-            ),
-            TextField(
-              maxLength: 20,
-              controller: inputTitle,
-              decoration: const InputDecoration(
-                labelText: "Title",
-                hintText: "Input Expense titie",
-                // border: OutlineInputBorder(),
+        child: Padding(
+          padding: EdgeInsets.only(bottom: KeyBoardSpace + 10),
+          child: Column(
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 50),
+                child: BottomSheetBar(height: 8, width: 100),
               ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Row(
-              children: [
-                Expanded(
-                  flex: 5,
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    controller: inputAmount,
+              TextField(
+                maxLength: 20,
+                controller: inputTitle,
+                decoration: const InputDecoration(
+                  labelText: "Title",
+                  hintText: "Input Expense titie",
+                  // border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 5,
+                    child: TextField(
+                      keyboardType: TextInputType.number,
+                      controller: inputAmount,
+                      decoration: const InputDecoration(
+                        labelText: "\$ Amount",
+                        hintText: "Input Amount",
+                        prefixText: "\$ ",
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  Expanded(
+                    flex: 5,
+                    child: Row(
+                      children: [
+                        const Spacer(),
+                        Text(
+                          dateText,
+                          style: const TextStyle(color: Colors.black),
+                        ),
+                        IconButton(
+                          onPressed: dateSelected,
+                          icon: const Icon(Icons.calendar_month_rounded),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Row(
+                children: [
+                  DropdownButton(
+                    style: TextStyle(color: Colors.blue[900]),
+                    value: selectedCategory,
+                    items: ExpenseCategory.values.map(
+                      (toElement) {
+                        return DropdownMenuItem(
+                          value: toElement,
+                          child: Text(toElement.name.toUpperCase()),
+                        );
+                      },
+                    ).toList(), //?
+                    onChanged: (value) {
+                      setState(
+                        () {
+                          selectedCategory = value!;
+                        },
+                      );
+                    },
+                  ),
+                  const Spacer(),
+                ],
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text("Remake:"),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  TextField(
+                    maxLines: 8,
+                    maxLength: 350,
+                    controller: inputRemark,
                     decoration: const InputDecoration(
-                      labelText: "\$ Amount",
-                      hintText: "Input Amount",
-                      prefixText: "\$ ",
                       border: OutlineInputBorder(),
                     ),
                   ),
-                ),
-                const Spacer(),
-                Expanded(
-                  flex: 5,
-                  child: Row(
-                    children: [
-                      const Spacer(),
-                      Text(
-                        dateText,
-                        style: const TextStyle(color: Colors.black),
-                      ),
-                      IconButton(
-                        onPressed: dateSelected,
-                        icon: const Icon(Icons.calendar_month_rounded),
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Row(
-              children: [
-                DropdownButton(
-                  style: TextStyle(color: Colors.blue[900]),
-                  value: selectedCategory,
-                  items: ExpenseCategory.values.map(
-                    (toElement) {
-                      return DropdownMenuItem(
-                        value: toElement,
-                        child: Text(toElement.name.toUpperCase()),
-                      );
-                    },
-                  ).toList(), //?
-                  onChanged: (value) {
-                    setState(
-                      () {
-                        selectedCategory = value!;
-                      },
-                    );
-                  },
-                ),
-                const Spacer(),
-              ],
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text("Remake:"),
-                const SizedBox(
-                  height: 5,
-                ),
-                TextField(
-                  maxLines: 8,
-                  maxLength: 350,
-                  controller: inputRemark,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Row(
-                children: [
-                  const Spacer(),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text("Cancel"),
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  ElevatedButton(
-                    onPressed: saveExpense,
-                    child: const Text("Add Expense"),
-                  ),
                 ],
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: Row(
+                  children: [
+                    const Spacer(),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text("Cancel"),
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    ElevatedButton(
+                      onPressed: saveExpense,
+                      child: const Text("Add Expense"),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
