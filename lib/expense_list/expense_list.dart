@@ -135,6 +135,10 @@ class _ExpenseListState extends State<ExpenseList> {
 
   @override
   Widget build(BuildContext context) {
+
+    final height=MediaQuery.of(context).size.height;
+    print(height);
+
     return Scaffold(
       appBar: AppBar(
         leading: const Icon(Icons.my_library_add),

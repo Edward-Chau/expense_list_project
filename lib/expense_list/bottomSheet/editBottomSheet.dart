@@ -91,7 +91,7 @@ class _EditbottomsheetState extends State<Editbottomsheet> {
     inputAmount.text = registeredExpenseList[widget.index].amount.toString();
     inputRemark.text = registeredExpenseList[widget.index].remark;
     super.initState();
-  }//?
+  } //?
 
   @override
   Widget build(BuildContext context) {
@@ -111,121 +111,129 @@ class _EditbottomsheetState extends State<Editbottomsheet> {
     return Container(
       margin: const EdgeInsetsDirectional.symmetric(horizontal: 30),
       width: double.infinity,
-      child: Column(
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 10, bottom: 50),
-            child: BottomSheetBar(height: 8, width: 100),
-          ),
-          TextField(
-            maxLength: 20,
-            controller: inputTitle,
-            decoration: const InputDecoration(
-              labelText: "Title",
-              hintText: "Input Expense titie",
-              // border: OutlineInputBorder(),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(top: 10, bottom: 50),
+              child: BottomSheetBar(height: 8, width: 100),
             ),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: inputAmount,
-                  keyboardType: TextInputType.number,
+            TextField(
+              style: const TextStyle(color: Colors.black),
+              maxLength: 20,
+              controller: inputTitle,
+              decoration: const InputDecoration(
+                labelText: "Title",
+                hintText: "Input Expense titie",
+                // border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  flex: 5,
+                  child: TextField(
+                    style: const TextStyle(color: Colors.black),
+                    controller: inputAmount,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      labelText: "\$ Amount",
+                      hintText: "Input Amount",
+                      prefixText: "\$ ",
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+                const Spacer(),
+                Expanded(
+                  flex: 5,
+                  child: Row(
+                    children: [
+                      const Spacer(),
+                      Text(dateText),
+                      IconButton(
+                        onPressed: dateSelected,
+                        icon: const Icon(Icons.calendar_month_rounded),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Row(
+              children: [
+                DropdownButton(
+                  style: TextStyle(color: Colors.blue[900]),
+                  value: selectedCategory,
+                  items: ExpenseCategory.values.map(
+                    (toElement) {
+                      return DropdownMenuItem(
+                        value: toElement,
+                        child: Text(toElement.name.toUpperCase()),
+                      );
+                    },
+                  ).toList(),
+                  onChanged: (value) {
+                    setState(
+                      () {
+                        selectedCategory = value!;
+                      },
+                    );
+                  },
+                ),
+                const Spacer(),
+              ],
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text("Remake:"),
+                const SizedBox(
+                  height: 5,
+                ),
+                TextField(
+                  maxLines: 8,
+                  maxLength: 350,
+                  controller: inputRemark,
+                  style: const TextStyle(color: Colors.black),
                   decoration: const InputDecoration(
-                    labelText: "\$ Amount",
-                    hintText: "Input Amount",
-                    prefixText: "\$ ",
                     border: OutlineInputBorder(),
                   ),
                 ),
-              ),
-              const Spacer(),
-              Expanded(
-                child: Row(
-                  children: [
-                    Text(dateText),
-                    IconButton(
-                      onPressed: dateSelected,
-                      icon: const Icon(Icons.calendar_month_rounded),
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          Row(
-            children: [
-              DropdownButton(
-                style: TextStyle(color: Colors.blue[900]),
-                value: selectedCategory,
-                items: ExpenseCategory.values.map(
-                  (toElement) {
-                    return DropdownMenuItem(
-                      value: toElement,
-                      child: Text(toElement.name.toUpperCase()),
-                    );
-                  },
-                ).toList(),
-                onChanged: (value) {
-                  setState(
-                    () {
-                      selectedCategory = value!;
-                    },
-                  );
-                },
-              ),
-              const Spacer(),
-            ],
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text("Remake:"),
-              const SizedBox(
-                height: 5,
-              ),
-              TextField(
-                maxLines: 8,
-                maxLength: 350,
-                controller: inputRemark,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: Row(
-              children: [
-                const Spacer(),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text("Cancel"),
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                ElevatedButton(
-                  onPressed: saveExpense,
-                  child: const Text("Save Expense"),
-                ),
               ],
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Row(
+                children: [
+                  const Spacer(),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text("Cancel"),
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  ElevatedButton(
+                    onPressed: saveExpense,
+                    child: const Text("Save Expense"),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

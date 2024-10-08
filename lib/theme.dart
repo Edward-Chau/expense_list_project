@@ -24,8 +24,14 @@ class ThemeSetting extends StatelessWidget {
           ),
         ),
         textTheme: const TextTheme().copyWith(
+          bodyMedium: const TextStyle(
+            color: Colors.black,
+          ),
           titleLarge: const TextStyle(
-              fontSize: 20.0, fontWeight: FontWeight.bold, color: Colors.black),
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
         ),
       ),
       home: const ExpenseList(),

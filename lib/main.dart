@@ -3,6 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 void main() {
-  // SystemChrome.setPreferredOrientations(),
-  runApp(const ThemeSetting());
+  return runApp(const ThemeSetting());
 }
+
+// void main() {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   SystemChrome.setPreferredOrientations(
+//     [DeviceOrientation.portraitUp],
+//   ).then(
+//     (funtion) {
+//       return runApp(
+//         const ThemeSetting(),
+//       );
+//     },
+//   );
+// }
+
+// setPreferredOrientations
+
