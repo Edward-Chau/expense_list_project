@@ -5,9 +5,12 @@ import 'package:flutter/material.dart';
 
 class ShowEditBottomSheetWidget extends StatefulWidget {
   const ShowEditBottomSheetWidget(
-      {required this.saveEditExpanse,required this.index, required this.deledExpense, super.key});
+      {required this.saveEditExpanse,
+      required this.index,
+      required this.deledExpense,
+      super.key});
 
-final Function(ExpenModel expense,int index) saveEditExpanse;
+  final Function(ExpenModel expense, int index) saveEditExpanse;
   final int index;
   final Function(int index) deledExpense;
 
@@ -35,11 +38,13 @@ class _ShowEditBottomSheetState extends State<ShowEditBottomSheetWidget> {
           ),
           onTap: () {
             showModalBottomSheet(
+              useSafeArea: true,
               isScrollControlled: true,
               context: context,
               builder: (context) {
                 return Editbottomsheet(
-                  index: widget.index,saveEditExpanse: widget.saveEditExpanse,
+                  index: widget.index,
+                  saveEditExpanse: widget.saveEditExpanse,
                 );
               },
             );

@@ -29,29 +29,30 @@ class _RemakebottomsheetState extends State<Remakebottomsheet> {
           right: Radius.circular(20),
         ),
       ),
-      child: 
-         SingleChildScrollView(
-           child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 10,
-                  bottom: 20.0,
-                ),
-                child: Column(
-                  children: [
-                    const BottomSheetBar(
-                      height: 8,
-                      width: 120,
-                    ),
-                    const SizedBox(
-                      height: 15.0,
-                    ),
-                    Container(
-                      width: double.infinity,
-                      margin: const EdgeInsets.symmetric(horizontal: 100),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 10,
+                bottom: 20.0,
+              ),
+              child: Column(
+                children: [
+                  const BottomSheetBar(
+                    height: 8,
+                    width: 120,
+                  ),
+                  const SizedBox(
+                    height: 15.0,
+                  ),
+                  PhysicalModel(
+                    color: Colors.pink[100]!,
+                    borderRadius: BorderRadius.circular(10),
+                    elevation: 2,
+                    child: Container(
+                      width: (MediaQuery.of(context).size.width) / 2,
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 255, 208, 224),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Padding(
@@ -63,63 +64,69 @@ class _RemakebottomsheetState extends State<Remakebottomsheet> {
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                width: double.infinity,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                     Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: Text("Remake:",style: Theme.of(context).textTheme.bodyMedium,),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Text(
+                      "Remake:",
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
-                    Container(
-                      height: 200,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        border: Border.all(width: 1),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: widget.showRemakeWidget,
-                      ),
+                  ),
+                  Container(
+                    height: 200,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      border: Border.all(width: 1),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, bottom: 20),
-                      child: Row(
-                        children: [
-                          Text(
-                              "\$ ${widget.registeredExpenseList[widget.index].amount}"),
-                          const Spacer(),
-                          Text(
-                            formate.format(widget
-                                .registeredExpenseList[widget.index].expenseDate),
-                          )
-                        ],
-                      ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: widget.showRemakeWidget,
                     ),
-                    Row(
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10, bottom: 20),
+                    child: Row(
                       children: [
+                        Text(
+                            "\$ ${widget.registeredExpenseList[widget.index].amount}"),
                         const Spacer(),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Text("Cancel"),
-                        ),
+                        Text(
+                          formate.format(widget
+                              .registeredExpenseList[widget.index].expenseDate),
+                        )
                       ],
-                    ),const SizedBox(height: 20,)
-                  ],
-                ),
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      const Spacer(),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text("Cancel"),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  )
+                ],
               ),
-            ],
-                   ),
-         ),
-      
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

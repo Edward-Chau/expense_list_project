@@ -2,6 +2,7 @@ import 'package:expense_list_project/expense_list/bottomSheet/ExpenseOverlay.dar
 import 'package:expense_list_project/expense_list/widget/expenseItem.dart';
 import 'package:expense_list_project/expense_list/widget/totalExpense.dart';
 import 'package:expense_list_project/model/expenModel.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ExpenseList extends StatefulWidget {
@@ -39,13 +40,16 @@ class _ExpenseListState extends State<ExpenseList> {
       totalExpense = totalExpense + registeredExpenseList[i].amount;
     }
     return Text(
-      "Total Expense: \$${totalExpense.toString()}",
+      "Total Expense: \$${totalExpense.toStringAsFixed(0)}",
       style: Theme.of(context).textTheme.titleLarge,
     );
   }
 
   expenseOverlay() {
+
+
     showModalBottomSheet(
+      useSafeArea: true,
       isScrollControlled: true,
       context: context,
       builder: (ctx) {
@@ -126,7 +130,7 @@ class _ExpenseListState extends State<ExpenseList> {
           children: [
             Icon(Icons.save_alt, color: Colors.white),
             SizedBox(width: 8),
-            Text("Save Edit!"),
+            Text("Save Edit"),
           ],
         ),
       ),
@@ -136,10 +140,11 @@ class _ExpenseListState extends State<ExpenseList> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-    print(height);
+    // print(height);
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         leading: const Icon(Icons.my_library_add),
         title: const Text("ExpenseTracker"),
         actions: [
