@@ -76,7 +76,12 @@ class _ExpenseitemState extends State<Expenseitem> {
       );
     } else {
       return Expanded(
-        child: ListView.builder(
+        child: ReorderableListView.builder(
+          onReorder: (oldIndex, newIndex) {
+            if(newIndex>oldIndex){newIndex--;}
+            final item = registeredExpenseList.removeAt(oldIndex);
+            registeredExpenseList.insert(newIndex, item);
+          },
           itemCount: widget.registeredExpenseList.length,
           itemBuilder: (context, index) {
             return Dismissible(
@@ -90,6 +95,7 @@ class _ExpenseitemState extends State<Expenseitem> {
               },
               child: Card(
                 child: ListTile(
+                  key: ValueKey(registeredExpenseList[index].id),
                   leading: categoryIcon[
                       widget.registeredExpenseList[index].category],
                   title: Padding(

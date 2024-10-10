@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 enum ExpenseCategory { food, travel, medical, transportation, personal }
 
@@ -10,17 +11,21 @@ final categoryIcon = {
   ExpenseCategory.personal: const Icon(Icons.person)
 };
 
+var uuid = const Uuid();
+
 class ExpenModel {
   ExpenModel(
       {required this.title,
       required this.amount,
       required this.category,
       required this.expenseDate,
-      required this.remark});
+      required this.remark})
+      : id = uuid.v4();
 
   String title;
   double amount;
   ExpenseCategory category;
   DateTime expenseDate;
   String remark;
+  String id;
 }
